@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Starlight Cinemas</h1>
+
+<p>
+    Welcome to Starlight Cinemas! We are excited to announce our upcoming movies for the holiday season.
+    Please join us at Starlight for all your holiday favorites.
+</p>
+
+<h2>Upcoming Movies</h2>
+
+<p>The Halloween Season is upon us and here is you Halloween Favorites</p>
+<div style="display: flex; gap: 20px;">
+<img src="/media/movies/that-was-close-beetlejuice-movie-poster-1531424.png" alt="description" width="400">
+
+<img src="/media/movies/corpse-bride.jpg" alt="description" width="400">
+</div>    
+    {% for movie in movies %}
+        {{ movie.movie_title }}
+    {%if movie.movie_image%}
+        {{movie.movie_image.url}}
+    {% endif %}
+
+
+<h2>Release Date</h2>
+    {% endfor %}
+
+<p>Starlight Cinemas</p>
+<p></p>
+<p></p>
+
+<h2>See you all at the Movies</h2>
+
+<p></p>
+
+{% endblock %}

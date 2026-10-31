@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Starlight Cinemas Home Page</h1>
+    <p>Welcome to Starlight Cinemas!</p>
+
+<h2>Now Showing</h2>
+
+<div class="movie-container">
+    {% for movie in movies %}
+        <div class="movie_card">
+        <h4><strong>{{ movie.movie_title }}</strong></h4>
+        {% if movie.movie_image %}
+            <p><img src="{{ movie.movie_image.url }}" width="150" alt="{{ movie.movie_title }}"></p>
+        {% endif %}
+            <p>{{ movie.movie_summary }}</p>
+            <p><strong>Genre:</strong> {{ movie.movie_genre }}</p>
+            <p><strong>Runtime:</strong> {{ movie.movie_runtime }} minutes</p>
+            <p><strong>Rating:</strong> {{ movie.movie_rating }}</p>
+            <p><strong>Director:</strong> {{ movie.movie_director }}</p>
+            <p><strong>Movie Release Date:</strong> {{ movie.movie_release_date }}</p>
+            <p><strong>Showtimes</strong></p>
+            {% for showtime in showtimes %}
+                {% if showtime.movie == movie %}
+                    <p>{{ showtime.show_date|date:"l, M d, Y" }} -
+                       {{ showtime.show_time|time:"g:i A" }}</p>
+                {% endif %}
+            {% empty %}
+                <p>No showtimes available.</p>
+            {% endfor %}
+        </div>
+{% endfor %}
+</div>
+
+{% endblock %}
