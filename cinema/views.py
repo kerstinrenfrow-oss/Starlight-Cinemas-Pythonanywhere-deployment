@@ -7,6 +7,7 @@ from .models import Movie, MovieScreen, Showtime, Reservation
 def index(request):
     """View function for the home page of the site."""
     num_movies = Movie.objects.all().count()
+    showtimes = Showtime.objects.all()
     movies = Movie.objects.all()
     num_showtimes = Showtime.objects.all().count()
     num_reservations = Reservation.objects.all().count()
@@ -14,10 +15,12 @@ def index(request):
 
     context = {
                'movies': movies,
+               'showtimes': showtimes,
                'num_movies': num_movies,
                'num_showtimes': num_showtimes,
                'num_reservations': num_reservations,
                'num_screens': num_screens
+
     }
     return render(request, 'index.html', context)
 
