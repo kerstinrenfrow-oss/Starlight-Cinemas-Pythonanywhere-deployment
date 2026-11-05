@@ -19,15 +19,36 @@
             <p><strong>Rating:</strong> {{ movie.movie_rating }}</p>
             <p><strong>Director:</strong> {{ movie.movie_director }}</p>
             <p><strong>Movie Release Date:</strong> {{ movie.movie_release_date }}</p>
-            <p><strong>Showtimes</strong></p>
-            {% for showtime in showtimes %}
-                {% if showtime.movie == movie %}
-                    <p>{{ showtime.show_date|date:"l, M d, Y" }} -
-                       {{ showtime.show_time|time:"g:i A" }}</p>
-                {% endif %}
-            {% empty %}
-                <p>No showtimes available.</p>
-            {% endfor %}
+            <form method="GET">
+                <input type="hidden" name="movie_id" value="{{ movie.movie_id }}">
+            <p><strong>Select Date:</strong></p>
+            <select id="date-{{ movie.id }}" name="show_date">
+                <option value="">Select Date</option>
+                {%  for date in dates %}
+                    <option value="{{ date|date:'Y-m-d' }}"
+                        {% if selected_date == date|date:'Y-m-d' %}selected{% endif %}>
+                        {{ date|date:"l, M d, Y" }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">View Showtimes</button>
+            </form>
+
+            {% if selected_movie == movie.movie_id %}
+                <form  method="GET" action="{% url 'reservation' %}">
+                <p><strong>Select Showtime:</strong></p>
+                <select name="show_time">
+                    <option value="">Select Showtime:</option>
+                    {%  for showtime in showtimes %}
+                        <option value="{{ showtime.showtime_id }}">
+                            {{ showtime.show_time|time:"g:i A" }}
+                        </option>
+                    {%  endfor %}
+                </select>
+                <button type="submit">Reserve Now</button>
+                </form>
+            {%  endif %}
+
         </div>
 {% endfor %}
 </div>

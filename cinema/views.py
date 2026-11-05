@@ -14,11 +14,12 @@ def index(request):
     num_reservations = Reservation.objects.all().count()
     num_screens = MovieScreen.objects.all().count()
     today = timezone.localdate()
-    monday = today - timedelta(days=today.weekday())
-    sunday = monday + timedelta(days=6)
+    selected_movie = int(request.GET.get('movie_id') or 0)
+    selected_date = request.GET.get('show_date', None)
+    end_date = today + timedelta(days=7)
     for schedule in ScreeningSchedule.objects.all():
-        for day in range(7):
-            date = monday + timedelta(days=day)
+        for day in range(8):
+            date = today + timedelta(days=day)
 
             Showtime.objects.get_or_create(
                 movie=schedule.movie,
@@ -27,8 +28,16 @@ def index(request):
                 show_time=schedule.show_time
             )
     showtimes = Showtime.objects.filter(
-        show_date__range=[monday, sunday]
+        show_date__range=[today, end_date]
     ).order_by('show_date', 'show_time')
+
+    dates = sorted(set(showtimes.values_list('show_date', flat=True)))
+
+    if selected_movie and selected_date:
+        showtimes = showtimes.filter(
+            movie=selected_movie,
+            show_date=selected_date
+        )
 
     context = {
                'movies': movies,
@@ -36,8 +45,10 @@ def index(request):
                'num_movies': num_movies,
                'num_showtimes': num_showtimes,
                'num_reservations': num_reservations,
-               'num_screens': num_screens
-
+               'num_screens': num_screens,
+               'dates': dates,
+               'selected_movie': selected_movie,
+               'selected_date': selected_date,
     }
     return render(request, 'index.html', context)
 
@@ -47,3 +58,6 @@ def aboutus(request):
 
 def upcoming(request):
     return render(request, 'upcoming.html')
+
+def reservation(request):
+    return render(request, 'reservation.html')
