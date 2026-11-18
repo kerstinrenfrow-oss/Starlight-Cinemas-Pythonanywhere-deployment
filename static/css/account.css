@@ -1,0 +1,271 @@
+/* ==========================================
+   STARLIGHT CINEMAS
+   My Account & Reservation Details
+   (used together with reservations.css)
+   ========================================== */
+
+/* SHARED CARD */
+
+.account-card {
+    background-color: #101516;
+    border: 1px solid #444444;
+    border-radius: 7px;
+    padding: 24px;
+}
+
+.account-card + .account-card {
+    margin-top: 20px;
+}
+
+.account-page .account-card h3 {
+    color: #ffd400;
+    font-size: 22px;
+    margin: 0 0 18px;
+}
+
+/* LABEL / VALUE ROWS */
+
+.account-list {
+    margin: 0;
+}
+
+.account-row {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 15px;
+    padding: 6px 0;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.account-row dt {
+    font-weight: bold;
+}
+
+.account-row dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.account-row-divider {
+    border-top: 1px solid #555555;
+    margin-top: 12px;
+    padding-top: 16px;
+}
+
+/* SUCCESS MESSAGE */
+
+.account-message {
+    background-color: #063522;
+    border: 1px solid #168a52;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 15px;
+    margin-bottom: 22px;
+}
+
+/* ==========================================
+   MY ACCOUNT PAGE
+   ========================================== */
+
+.account-layout {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+/* LEFT SIDE MENU */
+
+.account-sidebar {
+    background-color: #101516;
+    border: 1px solid #444444;
+    border-radius: 7px;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.account-menu-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background-color: #ed001b;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.account-menu-button:hover {
+    background-color: #bd0016;
+    color: #ffffff;
+}
+
+.account-menu-button:focus-visible {
+    outline: 3px solid #ffd400;
+    outline-offset: -3px;
+}
+
+.account-menu-icon {
+    width: 20px;
+    height: 20px;
+    fill: #ffffff;
+    flex-shrink: 0;
+}
+
+/* RESERVATION LIST */
+
+.account-reservation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 15px;
+    row-gap: 3px;
+    padding: 14px 16px;
+    background-color: #050505;
+    border: 1px solid #444444;
+    border-radius: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+}
+
+.account-reservation + .account-reservation {
+    margin-top: 12px;
+}
+
+.account-reservation:hover {
+    border-color: #ffd400;
+    color: #ffffff;
+}
+
+.account-reservation:focus-visible {
+    outline: 3px solid #ffd400;
+    outline-offset: 2px;
+}
+
+.account-reservation-title {
+    grid-column: 1;
+    color: #ffd400;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.account-reservation-info {
+    grid-column: 1;
+    color: #cccccc;
+    font-size: 14px;
+}
+
+.account-reservation-link {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    color: #ff1028;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.account-page .account-empty {
+    color: #cccccc;
+    font-size: 15px;
+    margin: 0;
+}
+
+.account-empty a {
+    color: #ffd400;
+}
+
+/* ==========================================
+   RESERVATION DETAILS PAGE
+   ========================================== */
+
+.details-movie {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+}
+
+.details-poster {
+    width: 200px;
+    max-width: 35%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.details-info {
+    flex: 1;
+    min-width: 0;
+}
+
+/* CANCEL BUTTON */
+
+.details-actions {
+    border-top: 1px solid #555555;
+    margin-top: 24px;
+    padding-top: 24px;
+    text-align: center;
+}
+
+.details-cancel {
+    width: 100%;
+    max-width: 420px;
+}
+
+.details-back {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ffd400;
+    font-size: 15px;
+}
+
+.details-back:hover {
+    color: #ffffff;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 700px) {
+
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .account-sidebar {
+        min-height: 0;
+    }
+
+    .account-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+    .details-movie {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .details-poster {
+        max-width: 100%;
+    }
+
+    .account-reservation {
+        grid-template-columns: 1fr;
+    }
+
+    .account-reservation-link {
+        grid-column: 1;
+        grid-row: auto;
+        margin-top: 6px;
+    }
+
+    .account-card {
+        padding: 15px;
+    }
+}

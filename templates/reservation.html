@@ -1,7 +1,275 @@
+
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-<h1>Starlight Cinemas Reservation</h1>
+<link rel="stylesheet" href="{% static 'css/reservations.css' %}">
+
+<main class="booking-page">
+
+    <h1>Starlight Cinemas</h1>
+    <h2>Create Your Reservation</h2>
+
+    {% if error %}
+        <div class="booking-error" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    {% if showtime %}
+
+    <!-- MOVIE INFORMATION -->
+    <section class="booking-movie">
+
+        {% if movie.movie_image %}
+            <img
+                class="booking-poster"
+                src="{{ movie.movie_image.url }}"
+                alt="{{ movie.movie_title }} poster">
+        {% endif %}
+
+        <div class="booking-movie-details">
+
+            <h3>{{ movie.movie_title }}</h3>
+
+            <p>
+                <strong>Genre:</strong>
+                {{ movie.movie_genre }}
+            </p>
+
+            <p>
+                <strong>Runtime:</strong>
+                {{ movie.movie_runtime }} minutes
+            </p>
+
+            <p>
+                <strong>Rating:</strong>
+                {{ movie.movie_rating }}
+            </p>
+
+            <p>
+                <strong>Director:</strong>
+                {{ movie.movie_director }}
+            </p>
+
+            <p>
+                <strong>Release Date:</strong>
+                {{ movie.movie_release_date|date:"M d, Y" }}
+            </p>
+
+            <hr>
+
+            <!-- SELECTED SHOWTIME -->
+            <h3 class="booking-subheading">
+                Selected Showtime
+            </h3>
+
+            <p>
+                <strong>Date:</strong>
+                {{ showtime.show_date|date:"l, M d, Y" }}
+            </p>
+
+            <p>
+                <strong>Time:</strong>
+                {{ showtime.show_time|time:"g:i A" }}
+            </p>
+
+            <p>
+                <strong>Theater:</strong>
+                {{ screen }}
+            </p>
+
+        </div>
+    </section>
+
+    <!-- RESERVATION FORM -->
+    <form
+        method="POST"
+        action="{% url 'reservation' %}"
+        id="reservation-form">
+
+        {% csrf_token %}
+
+        <input
+            type="hidden"
+            name="show_time"
+            value="{{ showtime.pk }}">
+
+        <!-- TICKET DETAILS -->
+        <section class="booking-section">
+
+            <h3>Reservation Details</h3>
+
+            <div class="booking-field">
+
+                <label for="quantity">
+                    Number of Tickets:
+                </label>
+
+                <input type="number"
+                           name="quantity"
+                           id="quantity"
+                           value="{{ quantity }}"
+                           min="1"
+                           max="{{ available_seats }}"
+                           required>
+
+            </div>
+
+            <p>Available seats: {{ available_seats }}</p>
+
+            <div class="booking-field">
+
+                <span>Ticket Price:</span>
+
+                <span>
+                    ${{ ticket_price|floatformat:2 }} each
+                </span>
+
+            </div>
+
+            <div class="booking-field">
+
+                <label for="total-price">
+                    Total Price:
+                </label>
+
+                <input
+                    id="total-price"
+                    type="text"
+                    value="$10.00"
+                    readonly>
+
+            </div>
+
+        </section>
+
+        <!-- CONTACT INFORMATION -->
+        <section class="booking-section">
+
+            <h3>Contact Information</h3>
+
+            <div class="booking-field">
+
+                <label for="first-name">
+                    First Name:
+                </label>
+
+                <input
+                    type="text"
+                    id="first-name"
+                    name="first_name"
+                    value="{{ first_name }}"
+                    maxlength="100"
+                    autocomplete="given-name"
+                    required>
+
+            </div>
+
+            <div class="booking-field">
+
+                <label for="last-name">
+                    Last Name:
+                </label>
+
+                <input
+                    type="text"
+                    id="last-name"
+                    name="last_name"
+                    value="{{ last_name }}"
+                    maxlength="100"
+                    autocomplete="family-name"
+                    required>
+
+            </div>
+
+            <div class="booking-field">
+
+                <label for="email">
+                    Email:
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ email }}"
+                    autocomplete="email"
+                    required>
+
+            </div>
+
+        </section>
+
+        <!-- ACTION BUTTONS -->
+        <div class="booking-actions">
+
+            <a
+                class="booking-button booking-cancel"
+                href="{% url 'index' %}">
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="booking-button booking-confirm">
+                Confirm Reservation
+            </button>
+
+        </div>
+
+    </form>
+
+    <!-- AUTOMATIC PRICE CALCULATION -->
+    <script>
+
+        const quantitySelect =
+            document.getElementById("quantity");
+
+        const totalField =
+            document.getElementById("total-price");
+
+        const pricePerTicket =
+            Number("{{ ticket_price }}");
+
+        function updateTotal() {
+
+            const quantity =
+                Number(quantitySelect.value);
+
+            const total =
+                quantity * pricePerTicket;
+
+            totalField.value =
+                "$" + total.toFixed(2);
+
+        }
+
+        quantitySelect.addEventListener(
+            "input",
+            updateTotal
+        );
+
+        updateTotal();
+
+    </script>
+
+    {% else %}
+
+        <p>
+            Please select a screening before making
+            a reservation.
+        </p>
+
+        <a
+            class="booking-button booking-confirm"
+            href="{% url 'index' %}">
+            Return to Movies
+        </a>
+
+    {% endif %}
+
+</main>
 
 {% endblock %}

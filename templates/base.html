@@ -33,9 +33,9 @@
                 </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <span class="nav-link">
-                                Welcome, {{ user.username }}
-                            </span>
+                            <a class="nav-link" href="{% url 'my_account' %}">
+                                Welcome, {{ user.first_name|default:user.username }}
+                            </a>
                         </li>
 
                         <li class="nav-item">

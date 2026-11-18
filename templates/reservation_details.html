@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Reservation Details | Starlight Cinemas{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/reservations.css' %}">
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+
+<main class="booking-page account-page">
+
+    <!-- PAGE HEADING -->
+    <h1>Starlight Cinemas</h1>
+    <h2>Reservation Details</h2>
+
+    <!-- MESSAGES (for example: "This screening has already started...") -->
+    {% for message in messages %}
+        <div class="{% if message.tags == 'error' %}booking-error{% else %}account-message{% endif %}"
+             role="status">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <!-- RESERVATION CARD -->
+    <section class="account-card">
+
+        <div class="details-movie">
+
+            <!-- MOVIE POSTER -->
+            {% if movie.movie_image %}
+                <img
+                    class="details-poster"
+                    src="{{ movie.movie_image.url }}"
+                    alt="{{ movie.movie_title }} poster">
+            {% endif %}
+
+            <!-- RESERVATION INFORMATION -->
+            <div class="details-info">
+
+                <h3>{{ movie.movie_title }}</h3>
+
+                <dl class="account-list">
+
+                    <div class="account-row">
+                        <dt>Confirmation Number:</dt>
+                        <dd>{{ confirmation_number }}</dd>
+                    </div>
+
+                    <div class="account-row"
+                         <dt>Reserved by:</dt>
+                         <dd>{{ booking.first_name }} {{ booking.last_name }}</dd>
+                    </div>
+
+                    <div class="account-row">
+                        <dt>Date:</dt>
+                        <dd>{{ showtime.show_date|date:"l, F j, Y" }}</dd>
+                    </div>
+
+                    <div class="account-row">
+                        <dt>Time:</dt>
+                        <dd>{{ showtime.show_time|time:"g:i A" }}</dd>
+                    </div>
+
+                    <div class="account-row">
+                        <dt>Theater:</dt>
+                        <dd>Screen {{ screen.theater_number }}</dd>
+                    </div>
+
+                    <div class="account-row">
+                        <dt>Number of Tickets:</dt>
+                        <dd>{{ booking.ticket_quantity }}</dd>
+                    </div>
+
+                    <div class="account-row">
+                        <dt>Ticket Price:</dt>
+                        <dd>${{ booking.ticket_price|floatformat:2 }} each</dd>
+                    </div>
+
+                    <div class="account-row">
+                        <dt>Total Price:</dt>
+                        <dd>${{ booking.total_price|floatformat:2 }}</dd>
+                    </div>
+
+                    <div class="account-row">
+                        <dt>Reservation Date:</dt>
+                        <dd>{{ booking.reservation_date|date:"M d, Y" }}</dd>
+                    </div>
+
+                </dl>
+
+            </div>
+
+        </div>
+
+        <!-- CANCEL BUTTON -->
+        <div class="details-actions">
+
+            {% if can_cancel %}
+
+                <form
+                    method="POST"
+                    action="{% url 'cancel_reservation' booking.pk %}"
+                    onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="booking-button booking-confirm details-cancel">
+                        Cancel Reservation
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <p class="account-empty">
+                    This screening has already started, so the reservation
+                    can no longer be cancelled.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+    <!-- BACK LINK -->
+    <a href="{% url 'my_account' %}" class="details-back">
+        &larr; Back to My Account
+    </a>
+
+</main>
+
+{% endblock %}

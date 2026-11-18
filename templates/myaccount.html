@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Account | Starlight Cinemas{% endblock %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'css/reservations.css' %}">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+
+    <main class="booking-page account-page">
+
+        <!-- PAGE HEADING -->
+        <h1>Starlight Cinemas</h1>
+        <h2>My Account</h2>
+
+        <!-- MESSAGES (for example: "Your reservation has been cancelled.") -->
+        {% for message in messages %}
+            <div class="{% if message.tags == 'error' %}booking-error{% else %}account-message{% endif %}"
+                 role="status">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="account-layout">
+
+            <!-- LEFT SIDE MENU -->
+            <aside class="account-sidebar">
+                <a href="#my-reservations" class="account-menu-button">
+                    <svg class="account-menu-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="8" r="4"></circle>
+                        <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"></path>
+                    </svg>
+                    My Reservations
+                </a>
+            </aside>
+
+            <!-- RIGHT SIDE CONTENT -->
+            <div class="account-content">
+
+                <!-- ACCOUNT INFORMATION -->
+                <section class="account-card">
+
+                    <h3>Account Information</h3>
+
+                    <dl class="account-list">
+
+                        <div class="account-row">
+                            <dt>First Name:</dt>
+                            <dd>{{ user.first_name|default:"Not provided" }}</dd>
+                        </div>
+
+                        <div class="account-row">
+                            <dt>Last Name:</dt>
+                            <dd>{{ user.last_name|default:"Not provided" }}</dd>
+                        </div>
+
+                        <div class="account-row">
+                            <dt>Email:</dt>
+                            <dd>{{ user.email|default:"Not provided" }}</dd>
+                        </div>
+
+                        <div class="account-row">
+                            <dt>Phone:</dt>
+                            <dd>{{ profile.phone|default:"Not provided" }}</dd>
+                        </div>
+
+                        <div class="account-row account-row-divider">
+                            <dt>Account Created:</dt>
+                            <dd>{{ user.date_joined|date:"M d, Y" }}</dd>
+                        </div>
+
+                    </dl>
+                    <details>
+                        <summary>Edit Account Information</summary>
+
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <p>First Name:</p>
+                            <input type="text" name="first_name"
+                                   value="{{ user.first_name }}" maxlength="150" required>
+                            <p>Last Name:</p>
+                            <input type="text" name="last_name"
+                                   value="{{ user.last_name }}" maxlength="150" required>
+                            <p>Email:</p>
+                            <input type="email" name="email"
+                                   value="{{ user.email }}" maxlength="254" required>
+                            <p>Phone:</p>
+                            <input type="tel" name="phone"
+                                   value="{{ profile.phone }}"
+                                   pattern="[0-9]{10}" maxlength="10"
+                                   placeholder="4025553333"
+                                   required>
+                            <small>Enter 10 digits including area code.</small>
+                            <p>
+                                <button type="submit">Save Changes</button>
+                            </p>
+                        </form>
+                    </details>
+
+                </section>
+
+                <!-- MY RESERVATIONS -->
+                <section class="account-card" id="my-reservations">
+
+                    <h3>My Reservations</h3>
+
+                    {% for booking in reservations %}
+
+                        <a class="account-reservation"
+                           href="{% url 'reservation_details' booking.pk %}">
+
+                        <span class="account-reservation-title">
+                            {{ booking.showtime.movie.movie_title }}
+                        </span>
+
+                            <span class="account-reservation-info">
+                            {{ booking.showtime.show_date|date:"l, M d, Y" }}
+                            at {{ booking.showtime.show_time|time:"g:i A" }}
+                            &middot; {{ booking.ticket_quantity }}
+                            ticket{{ booking.ticket_quantity|pluralize }}
+                        </span>
+
+                            <span class="account-reservation-info">
+                            Confirmation Number: {{ booking.confirmation_number }}
+                            </span>
+
+                            <span class="account-reservation-info">
+                                Reserved By: {{ booking.first_name }} {{ booking.last_name }}
+                            </span>
+
+                            <span class="account-reservation-link">
+                            View Details
+                        </span>
+
+                        </a>
+
+                    {% empty %}
+
+                        <p class="account-empty">
+                            You do not have any reservations yet.
+                            <a href="{% url 'index' %}">Browse movies</a>
+                        </p>
+
+                    {% endfor %}
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+{% endblock %}

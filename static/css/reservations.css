@@ -1,0 +1,393 @@
+
+/* ==========================================
+   STARLIGHT CINEMAS
+   Sprint 2 - Reservation & Confirmation
+   ========================================== */
+
+/* MAIN PAGE */
+
+.booking-page {
+    max-width: 900px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+/* HEADINGS */
+
+.booking-page h1 {
+    color: #ff1028;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0 0 5px;
+}
+
+.booking-page h2 {
+    color: #ffd400;
+    font-size: 29px;
+    font-weight: bold;
+    margin: 0 0 25px;
+}
+
+.booking-page h3 {
+    color: #ffd400;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 0 0 14px;
+}
+
+.booking-page p {
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+/* MOVIE POSTER AND DETAILS */
+
+.booking-movie {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    padding-bottom: 25px;
+}
+
+.booking-poster {
+    width: 225px;
+    max-width: 35%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.booking-movie-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.booking-movie-details p {
+    margin: 7px 0;
+    font-size: 15px;
+}
+
+.booking-movie-details strong {
+    color: #ffffff;
+}
+
+.booking-movie-details hr {
+    border: none;
+    border-top: 1px solid #555555;
+    margin: 20px 0;
+}
+
+.booking-subheading {
+    color: #ffd400 !important;
+}
+
+/* RESERVATION SECTIONS */
+
+.booking-section {
+    border-top: 1px solid #555555;
+    padding: 22px 0;
+}
+
+.booking-section h3 {
+    color: #ffd400;
+    margin-bottom: 20px;
+}
+
+/* FORM FIELDS */
+
+.booking-field {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+.booking-field label,
+.booking-field span {
+    color: #ffffff;
+}
+
+.booking-field input,
+.booking-field select {
+    width: 100%;
+    max-width: 390px;
+    min-height: 42px;
+    padding: 9px 12px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #111111;
+    font-family: inherit;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.booking-field select {
+    cursor: pointer;
+}
+
+.booking-field input:focus,
+.booking-field select:focus {
+    outline: 2px solid #ffd400;
+    outline-offset: 2px;
+}
+
+.booking-field input[readonly] {
+    background-color: #dedede;
+    font-weight: bold;
+    cursor: default;
+}
+
+/* BUTTONS */
+
+.booking-actions {
+    display: flex;
+    gap: 15px;
+    border-top: 1px solid #555555;
+    padding-top: 24px;
+}
+
+.booking-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    min-height: 46px;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.booking-cancel {
+    background-color: #30343b;
+    flex: 1;
+}
+
+.booking-cancel:hover {
+    background-color: #454a53;
+}
+
+.booking-confirm {
+    background-color: #ed001b;
+    flex: 2;
+}
+
+.booking-confirm:hover {
+    background-color: #bd0016;
+}
+
+.booking-button:focus-visible {
+    outline: 3px solid #ffd400;
+    outline-offset: 3px;
+}
+
+/* ERROR MESSAGES */
+
+.booking-error {
+    background-color: #651722;
+    color: #ffffff;
+    border: 1px solid #ff6675;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 22px;
+}
+
+/* ==========================================
+   CONFIRMATION PAGE
+   ========================================== */
+
+/* SUCCESS MESSAGE */
+
+.booking-success {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #063522;
+    border: 1px solid #168a52;
+    border-radius: 6px;
+}
+
+.booking-success strong {
+    color: #ffffff;
+    font-size: 17px;
+}
+
+.booking-success p {
+    margin: 5px 0 0;
+    font-size: 14px;
+}
+
+.success-check {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: #23b26b;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* CONFIRMATION CARD */
+
+.confirmation-card {
+    background-color: #101516;
+    border: 1px solid #444444;
+    border-radius: 7px;
+    padding: 24px;
+}
+
+.confirmation-card > h3 {
+    color: #ffffff;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.confirmation-number {
+    color: #ffd400;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+/* CONFIRMED MOVIE DETAILS */
+
+.confirmation-movie {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #050505;
+    border: 1px solid #444444;
+    border-radius: 5px;
+}
+
+.confirmation-poster {
+    width: 160px;
+    height: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.confirmation-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.confirmation-details h3 {
+    color: #ffd400;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.confirmation-details p {
+    color: #ffffff;
+    font-size: 15px;
+    margin: 8px 0;
+}
+
+.confirmation-details strong {
+    display: inline-block;
+    min-width: 110px;
+}
+
+/* CONFIRMATION FOOTER */
+
+.confirmation-note {
+    border-top: 1px solid #444444;
+    margin-top: 20px;
+    padding-top: 18px;
+    text-align: center;
+}
+
+.confirmation-note p {
+    color: #cccccc;
+    font-size: 14px;
+    margin: 7px 0;
+}
+
+.booking-home {
+    display: flex;
+    max-width: 300px;
+    margin: 28px auto;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 700px) {
+
+    .booking-page {
+        padding: 20px 15px;
+        margin: 15px auto;
+    }
+
+    .booking-page h1 {
+        font-size: 29px;
+    }
+
+    .booking-page h2 {
+        font-size: 24px;
+    }
+
+    .booking-movie {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .booking-poster {
+        width: 200px;
+        max-width: 100%;
+    }
+
+    .booking-field {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .booking-field input,
+    .booking-field select {
+        max-width: 100%;
+    }
+
+    .booking-actions {
+        flex-direction: column;
+    }
+
+    .booking-cancel,
+    .booking-confirm {
+        width: 100%;
+    }
+
+    .confirmation-movie {
+        flex-direction: column;
+    }
+
+    .confirmation-poster {
+        width: 160px;
+    }
+
+    .confirmation-card {
+        padding: 15px;
+    }
+}

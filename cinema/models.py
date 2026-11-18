@@ -53,4 +53,16 @@ class Reservation(models.Model):
     reservation_date = models.DateTimeField()
     showtime = models.ForeignKey(Showtime, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, blank=True, default='')
+    last_name = models.CharField(max_length=100, blank=True, default='')
+    email = models.EmailField(blank=True, default='')
+    def __str__(self):
+        return f"SC{self.reservation_date:%m%d%Y}-{self.pk:04d} - {self.showtime.show_date:%Y-%m-%d %H:%M} - {self.first_name} {self.last_name}"
 
+class UserProfile(models.Model):
+    """Extra account information that Django's built-in User does not store."""
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    phone = models.CharField(max_length=20, blank=True, default='')
+
+    def __str__(self):
+        return f"Profile for {self.user.username}"

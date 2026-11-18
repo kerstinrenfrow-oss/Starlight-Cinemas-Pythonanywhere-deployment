@@ -1,0 +1,124 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/reservations.css' %}">
+
+<main class="booking-page confirmation-page">
+
+    <!-- PAGE HEADING -->
+    <h1>Starlight Cinemas</h1>
+    <h2>Reservation Confirmed!</h2>
+
+    <!-- SUCCESS MESSAGE -->
+    <div class="booking-success" role="status">
+
+        <span class="success-check">✓</span>
+
+        <div>
+            <strong>
+                Your reservation has been successfully created!
+            </strong>
+            <p>
+                A confirmation number has been generated
+                for your reservation.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- CONFIRMATION CARD -->
+    <section class="confirmation-card">
+
+        <h3>
+            Confirmation Number:
+            <span class="confirmation-number">
+                {{ confirmation_number }}
+            </span>
+        </h3>
+
+        <div class="confirmation-movie">
+
+            <!-- MOVIE POSTER -->
+            {% if movie.movie_image %}
+                <img
+                    class="confirmation-poster"
+                    src="{{ movie.movie_image.url }}"
+                    alt="{{ movie.movie_title }} poster">
+            {% endif %}
+
+            <!-- RESERVATION INFORMATION -->
+            <div class="confirmation-details">
+
+                <h3>{{ movie.movie_title }}</h3>
+
+                <p>
+                    <strong>Date:</strong>
+                    {{ showtime.show_date|date:"l, M d, Y" }}
+                </p>
+
+                <p>
+                    <strong>Time:</strong>
+                    {{ showtime.show_time|time:"g:i A" }}
+                </p>
+
+                <p>
+                    <strong>Theater:</strong>
+                    {{ screen }}
+                </p>
+
+                <p>
+                    <strong>Tickets:</strong>
+                    {{ booking.ticket_quantity }}
+                </p>
+
+                <p>
+                    <strong>Ticket Price:</strong>
+                    ${{ booking.ticket_price|floatformat:2 }} each
+                </p>
+
+                <p>
+                    <strong>Total Price:</strong>
+                    ${{ booking.total_price|floatformat:2 }}
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- CUSTOMER INFORMATION -->
+        <div class="confirmation-note">
+
+            <p>
+                Reserved for
+                {{ booking.first_name }}
+                {{ booking.last_name }}
+            </p>
+
+            <p>
+                Contact Email: {{ booking.email }}
+            </p>
+
+            <p>
+                Please keep your confirmation number
+                for your records.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- RETURN HOME -->
+    <a
+        href="{% url 'index' %}"
+        class="booking-button booking-confirm booking-home">
+
+        Return to Home Page
+
+    </a>
+
+</main>
+
+{% endblock %}

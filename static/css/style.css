@@ -22,11 +22,17 @@ h4 {
 }
 
 .movie-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 30px;
 }
 
-.movie-card {
-    flex: 1;
+.movie_card {
     min-width: 0;
+}
+
+.movie_card img {
+    width: 226px;
+    height: 338px;
+    object-fit: cover;
 }
